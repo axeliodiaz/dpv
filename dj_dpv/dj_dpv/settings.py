@@ -12,18 +12,33 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+from os.path import join, normpath
+from configparser import RawConfigParser
+
+PROJECT_NAME = 'dpv'
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SITE_ROOT = os.path.dirname(BASE_DIR)
 
+# ini config
+FILE_CONFIG_NAME = '{}.ini'.format(PROJECT_NAME)
+CONFIG_FILE = '/etc/{}/{}'.format(PROJECT_NAME, FILE_CONFIG_NAME)
+
+config = RawConfigParser()
+if os.path.isfile(CONFIG_FILE):
+    config.read(CONFIG_FILE)
+else:
+    config.read(os.path.join(SITE_ROOT, 'etc', FILE_CONFIG_NAME))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'n-v)(b2m_1#=bo-xn5h)*!rpn)wtx)_=@_$3x%*$m%w8!wm=my'
+SECRET_KEY = config.get('secrets', 'APP_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config.get('debug', 'DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -75,8 +90,12 @@ WSGI_APPLICATION = 'dj_dpv.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config.get('database', 'DBNAME'),
+        'USER': config.get('database', 'DBUSER'),
+        'PASSWORD': config.get('database', 'DBPWD'),
+        'HOST': config.get('database', 'DBHOST'),
+        'PORT': config.get('database', 'DBPORT'),
     }
 }
 
