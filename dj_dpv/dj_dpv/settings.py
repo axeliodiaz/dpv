@@ -40,6 +40,17 @@ SECRET_KEY = config.get('secrets', 'APP_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config.get('debug', 'DEBUG')
 
+# Twitter
+# Go to http://apps.twitter.com and create an app.
+# The consumer key and secret will be generated for you after
+TWITTER_CONSUMER_KEY = config.get('twitter', 'TWITTER_CONSUMER_KEY')
+TWITTER_CONSUMER_SECRET = config.get('twitter', 'TWITTER_CONSUMER_SECRET')
+
+# After the step above, you will be redirected to your app's page.
+# Create an access token under the the "Your access token" section
+TWITTER_ACCESS_TOKEN = config.get('twitter', 'TWITTER_ACCESS_TOKEN')
+TWITTER_ACCESS_TOKEN_SECRET = config.get('twitter', 'TWITTER_ACCESS_TOKEN_SECRET')
+
 ALLOWED_HOSTS = []
 
 
