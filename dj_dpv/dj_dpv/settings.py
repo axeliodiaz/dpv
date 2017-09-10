@@ -152,3 +152,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+PESO_INFO_FROM = 'http://valordeldolar.cl/'
+BS_INFO_FROM = 'dolartoday'
