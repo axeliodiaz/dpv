@@ -40,6 +40,8 @@ SECRET_KEY = config.get('secrets', 'APP_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config.get('debug', 'DEBUG')
 
+SITE_ID = config.get('info', 'SITE_ID')
+
 # Twitter
 # Go to http://apps.twitter.com and create an app.
 # The consumer key and secret will be generated for you after
@@ -57,16 +59,23 @@ ALLOWED_HOSTS = []
 # Application definition
 
 PROJECT_APPS = [
+    'api',
+    'core',
     'dashboard'
 ]
 
-INSTALLED_APPS = PROJECT_APPS + [
+THIRD_APPS = [
+    'rest_framework'
+]
+
+INSTALLED_APPS = PROJECT_APPS + THIRD_APPS + [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -155,3 +164,18 @@ STATIC_URL = '/static/'
 
 PESO_INFO_FROM = 'http://valordeldolar.cl/'
 BS_INFO_FROM = 'dolartoday'
+
+# RestFramwork
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
+# URLs
+CORE_URL = config.get('urls', 'CORE_URL')
+CORE_PORT = config.get('urls', 'CORE_PORT')
+URL_CORE = 'http://{}:{}'.format(CORE_URL, CORE_PORT)
+URL_API = URL_CORE + '/api/'
